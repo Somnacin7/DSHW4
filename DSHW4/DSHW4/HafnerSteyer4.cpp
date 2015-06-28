@@ -75,6 +75,54 @@ void insertionSort(vector<int> &v) {
 	return;
 }
 
+void bubbleSort(vector<int> &v) {
+	// bubble sort a vector
+	int temp;
+	for (unsigned int i = 0; i < v.size() - 1; i++) {
+		for (unsigned int j = 0; j < v.size() - 1; j++) {
+			if (v[j] > v[j + 1]) {
+				temp = v[j];
+				v[j] = v[j + 1];
+				v[j + 1] = temp;
+			}
+		}
+	}
+	return;
+}
+
+// this function declares the ending element as the pivot, then places the elements
+// to the left or right of the pivot, depending on whether they are bigger or smaller
+// Return Value: index of the partition
+int partition(vector<int> &v, int start, int end) {
+	int pivotValue = v[end];
+	int partitionIndex = start - 1;
+	int temp;
+
+	for (int n = start; n < end; n++) {
+		if (v[n] <= pivotValue) {
+			temp = v[partitionIndex];
+			v[partitionIndex] = v[n];
+			v[n] = temp;
+			partitionIndex++;
+		}
+	}
+
+	partitionIndex++;
+	temp = v[partitionIndex];
+	v[partitionIndex] = v[end];
+	v[end] = temp;
+
+	return partitionIndex;
+}
+
+void quickSort(vector<int> &v, int start, int end) {
+	if (start < end) {
+		int partitionIndex = partition(v, start, end);
+		quickSort(v, start, partitionIndex - 1);
+		quickSort(v, partitionIndex + 1, end);
+	}
+}
+
 int main() {
 	system("pause");
 	return 0;
