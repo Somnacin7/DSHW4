@@ -13,8 +13,11 @@
 
 using namespace std;
 
+enum large_sort_type { MERGE, QUICK };
+enum small_sort_type { BUBBLE, INSERTION };
+
+// this function merges two vectors, to be used with MergeSort
 vector<int> merge(vector<int> &l, vector<int> &r) {
-	// merges two vectors, to be used with MergeSort
 	vector<int> result;
 	unsigned int l1 = 0, r1 = 0;
 	while (l1 < l.size() || r1 < r.size()) {
@@ -81,6 +84,7 @@ void bubbleSort(vector<int> &v) {
 	for (unsigned int i = 0; i < v.size() - 1; i++) {
 		for (unsigned int j = 0; j < v.size() - 1; j++) {
 			if (v[j] > v[j + 1]) {
+				// if the current value is greater than the next one, switch them
 				temp = v[j];
 				v[j] = v[j + 1];
 				v[j + 1] = temp;
@@ -93,6 +97,7 @@ void bubbleSort(vector<int> &v) {
 // this function declares the ending element as the pivot, then places the elements
 // to the left or right of the pivot, depending on whether they are bigger or smaller
 // Return Value: index of the partition
+// To be used with quickSort
 int partition(vector<int> &v, int start, int end) {
 	int pivotValue = v[end];
 	int partitionIndex = start - 1;
@@ -115,6 +120,7 @@ int partition(vector<int> &v, int start, int end) {
 	return partitionIndex;
 }
 
+// quickSort: recursively sorts a vector
 void quickSort(vector<int> &v, int start, int end) {
 	if (start < end) {
 		int partitionIndex = partition(v, start, end);
@@ -123,7 +129,29 @@ void quickSort(vector<int> &v, int start, int end) {
 	}
 }
 
+void hybridSort(vector<int> &v, large_sort_type Large, small_sort_type Small, unsigned int T) {
+	if (v.size() > T) {
+		if (Large == MERGE) {
+			mergeSort(v);
+			return;
+		}
+		quickSort(v, 0, v.size() - 1);
+		return;
+	}
+	if (Small == BUBBLE) {
+		bubbleSort(v);
+		return;
+	}
+	insertionSort(v);
+	return;
+}
+
+// main function
 int main() {
+	cout << "This program " << endl;
+
+
+
 	system("pause");
 	return 0;
 }
