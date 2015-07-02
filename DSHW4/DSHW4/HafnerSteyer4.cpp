@@ -9,7 +9,10 @@
 // Postconditions: ?
 
 #include <iostream>
+#include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -129,7 +132,8 @@ void quickSort(vector<int> &v, int start, int end) {
 	}
 }
 
-void hybridSort(vector<int> &v, large_sort_type Large, small_sort_type Small, unsigned int T) {
+void hybridSort(	vector<int> &v, large_sort_type Large, small_sort_type Small, 
+					unsigned int T) {
 	if (v.size() > T) {
 		if (Large == MERGE) {
 			mergeSort(v);
@@ -146,9 +150,151 @@ void hybridSort(vector<int> &v, large_sort_type Large, small_sort_type Small, un
 	return;
 }
 
+
+void printVector(vector<int> &v) {
+	for (int i = 0; i < v.size(); i++) {
+		cout << v[i] << "\t";
+	}
+	cout << endl;
+}
+
 // main function
 int main() {
-	cout << "This program " << endl;
+	srand(time(NULL));
+
+
+	cout << "This program allows the user to create a list, and then hybrid" << endl;
+	cout << "sort it depending on an entered threshold" << endl;
+
+	bool again = true;
+	int threshold;
+	int listSize;
+	bool manualEntry;
+	bool display;
+	string tmp;
+	int tmpInt;
+	
+
+	while (again) {
+
+		// Get threshold from user
+		cout << "Threshold: ";
+		cin >> threshold;
+		while (threshold < 0) { // If threshold is negative, ask again
+			cout << "Please enter a valid threshold: ";
+			cin >> threshold;
+		}
+
+		// Get size of list
+		cout << "List size: ";
+		cin >> listSize;
+		while (listSize < 0) { // If listSize is negative, ask again
+			cout << "Please enter a valid list size: ";
+			cin >> listSize;
+		}
+
+		vector<int> arr;
+
+
+		// If <= 100, ask for manual entry
+		if (listSize <= 100) {
+			cout << "Manual entry or automatic entry? (manual/auto): ";
+			cin >> tmp;
+			manualEntry = (tmp == "manual") ? true : false;
+
+			if (!manualEntry) {
+				cout << "Should the generated list be displayed? (y/n): ";
+				cin >> tmp;
+				display = (tmp == "y") ? true : false;
+			}
+
+		} else { // Automatic by default: no manual entry, no display
+			display = false;
+			manualEntry = false;
+		}
+
+		// Enter each value by hand
+		if (manualEntry) { 
+			for (int i = 0; i < listSize; i++) {
+				cout << "Value for element " << i << ": ";
+				cin >> tmpInt;
+				arr.push_back(tmpInt);
+			}
+		} else { // Generated a random integer array
+			for (int i = 0; i < listSize; i++) {
+				arr.push_back(rand() % 1000000);
+			}
+		}
+
+		// Create copies to be sorted
+		vector<int> bubbleArr = vector<int>(arr);
+		vector<int> insertionArr = vector<int>(arr);
+		vector<int> mergeBubbleArr = vector<int>(arr);
+		vector<int> mergeInsertionArr = vector<int>(arr);
+		vector<int> quickBubbleArr = vector<int>(arr);
+		vector<int> quickInsertionArr = vector<int>(arr);
+
+		// Perform each sort
+		bubbleSort(bubbleArr);
+		insertionSort(insertionArr);
+		hybridSort(mergeBubbleArr, MERGE, BUBBLE, threshold);
+		hybridSort(mergeInsertionArr, MERGE, INSERTION, threshold);
+		cout << "quickbubble" << endl;
+		hybridSort(quickBubbleArr, QUICK, BUBBLE, threshold);
+		cout << "quickinsert" << endl;
+		hybridSort(quickInsertionArr, QUICK, INSERTION, threshold);
+
+
+		if (display) {
+			cout << endl << endl;
+			cout << "Unsorted:" << endl;
+			cout << "\t";
+			printVector(arr);
+
+			cout << endl << endl;
+			cout << "Bubble Sort:" << endl;
+			cout << "\t";
+			printVector(bubbleArr);
+
+			cout << endl << endl;
+			cout << "Insertion Sort:" << endl;
+			cout << "\t";
+			printVector(insertionArr);
+
+			cout << endl << endl;
+			cout << "Hybrid (Merge & Bubble, Threshold = "
+				<< threshold << "):" << endl;
+			cout << "\t";
+			printVector(mergeBubbleArr);
+
+			cout << endl << endl;
+			cout << "Hybrid (Merge & Insertion, Threshold = "
+				<< threshold << "):" << endl;
+			cout << "\t";
+			printVector(mergeInsertionArr);
+
+			cout << endl << endl;
+			cout << "Hybrid (Quick & Bubble, Threshold = "
+				<< threshold << "):" << endl;
+			cout << "\t";
+			printVector(quickBubbleArr);
+
+			cout << endl << endl;
+			cout << "Hybrid (Quick & Insertion, Threshold = "
+				<< threshold << "):" << endl;
+			cout << "\t";
+			printVector(quickInsertionArr);
+
+
+
+		}
+
+		cout << endl << endl << "Again? (y/n): ";
+		cin >> tmp;
+		again = (tmp == "y") ? true : false;
+
+
+	}
 
 
 
