@@ -173,6 +173,7 @@ int main() {
 	bool display = true;
 	string tmp;
 	int tmpInt;
+	bool displayComparisons = false;
 	
 
 	while (again) {
@@ -183,6 +184,22 @@ int main() {
 		while (threshold < 0) { // If threshold is negative, ask again
 			cout << "Please enter a valid threshold: ";
 			cin >> threshold;
+		}
+
+		// Get whether to display number of comparisons
+		cout << "Should the number of comparisons be displayed? (y/n) ";
+		while (cin >> tmp) {
+			if (tmp == "y") {
+				displayComparisons = true;
+				break;
+			}
+			else if (tmp == "n") {
+				displayComparisons = false;
+				break;
+			}
+			else {
+				cout << "Should the number of comparisons be displayed? (y/n) ";
+			}
 		}
 
 		// Get size of list
@@ -199,87 +216,111 @@ int main() {
 		// If <= 100, ask for manual entry
 		if (listSize <= 100) {
 			cout << "Manual entry or automatic entry? (manual/auto): ";
-			cin >> tmp;
-			manualEntry = (tmp == "manual") ? true : false;
+			while (cin >> tmp) {
+				if (tmp == "manual") {
+					manualEntry = true;
+					break;
+				}
+				else if (tmp == "auto") {
+					manualEntry = false;
+					break;
+				}
+				else {
+					cout << "Manual entry or automatic entry? (manual/auto): ";
+				}
+			}
 
 			if (!manualEntry) {
-				cout << "Should the generated lists be displayed? (y/n): ";
-				cin >> tmp;
-				display = (tmp == "y") ? true : false;
+				cout << "Should the generated lists be displayed? (y/n) ";
+				while (cin >> tmp) {
+					if (tmp == "y") {
+						display = true;
+						break;
+					}
+					else if (tmp == "n") {
+						display = false;
+						break;
+					}
+					else {
+						cout << "Should the generated lists be displayed? (y/n) ";
+					}
+				}
+
+			}
+			else { // Automatic by default: no manual entry, no display
+				display = false;
+				manualEntry = false;
 			}
 
-		} else { // Automatic by default: no manual entry, no display
-			display = false;
-			manualEntry = false;
-		}
-
-		// Enter each value by hand
-		if (manualEntry) { 
-			for (int i = 0; i < listSize; i++) {
-				cout << "Value for element " << i << ": ";
-				cin >> tmpInt;
-				arr.push_back(tmpInt);
+			// Enter each value by hand
+			if (manualEntry) {
+				for (int i = 0; i < listSize; i++) {
+					cout << "Value for element " << i << ": ";
+					cin >> tmpInt;
+					arr.push_back(tmpInt);
+				}
 			}
-		} else { // Generated a random integer array
-			for (int i = 0; i < listSize; i++) {
-				arr.push_back(rand() % 1000000);
+			else { // Generated a random integer array
+				for (int i = 0; i < listSize; i++) {
+					arr.push_back(rand() % 1000000);
+				}
 			}
+
+			// Create copies to be sorted
+			vector<int> bubbleArr = vector<int>(arr);
+			vector<int> insertionArr = vector<int>(arr);
+			vector<int> mergeBubbleArr = vector<int>(arr);
+			vector<int> mergeInsertionArr = vector<int>(arr);
+			vector<int> quickBubbleArr = vector<int>(arr);
+			vector<int> quickInsertionArr = vector<int>(arr);
+
+			// Perform each sort
+			bubbleSort(bubbleArr);
+			insertionSort(insertionArr);
+			hybridSort(mergeBubbleArr, MERGE, BUBBLE, threshold);
+			hybridSort(mergeInsertionArr, MERGE, INSERTION, threshold);
+			hybridSort(quickBubbleArr, QUICK, BUBBLE, threshold);
+			hybridSort(quickInsertionArr, QUICK, INSERTION, threshold);
+
+			if (display) {
+				cout << endl << endl;
+				cout << "Unsorted:" << endl;
+				printVector(arr);
+
+				cout << endl << endl;
+				cout << "Bubble Sort:" << endl;
+				printVector(bubbleArr);
+
+				cout << endl << endl;
+				cout << "Insertion Sort:" << endl;
+				printVector(insertionArr);
+
+				cout << endl << endl;
+				cout << "Hybrid (Merge & Bubble, Threshold = "
+					<< threshold << "):" << endl;
+				printVector(mergeBubbleArr);
+
+				cout << endl << endl;
+				cout << "Hybrid (Merge & Insertion, Threshold = "
+					<< threshold << "):" << endl;
+				printVector(mergeInsertionArr);
+
+				cout << endl << endl;
+				cout << "Hybrid (Quick & Bubble, Threshold = "
+					<< threshold << "):" << endl;
+				printVector(quickBubbleArr);
+
+				cout << endl << endl;
+				cout << "Hybrid (Quick & Insertion, Threshold = "
+					<< threshold << "):" << endl;
+				printVector(quickInsertionArr);
+			}
+
+			cout << endl << endl << "Again? (y/n): ";
+			cin >> tmp;
+			again = (tmp == "y") ? true : false;
+
 		}
-
-		// Create copies to be sorted
-		vector<int> bubbleArr = vector<int>(arr);
-		vector<int> insertionArr = vector<int>(arr);
-		vector<int> mergeBubbleArr = vector<int>(arr);
-		vector<int> mergeInsertionArr = vector<int>(arr);
-		vector<int> quickBubbleArr = vector<int>(arr);
-		vector<int> quickInsertionArr = vector<int>(arr);
-
-		// Perform each sort
-		bubbleSort(bubbleArr);
-		insertionSort(insertionArr);
-		hybridSort(mergeBubbleArr, MERGE, BUBBLE, threshold);
-		hybridSort(mergeInsertionArr, MERGE, INSERTION, threshold);
-		hybridSort(quickBubbleArr, QUICK, BUBBLE, threshold);
-		hybridSort(quickInsertionArr, QUICK, INSERTION, threshold);
-
-		if (display) {
-			cout << endl << endl;
-			cout << "Unsorted:" << endl;
-			printVector(arr);
-
-			cout << endl << endl;
-			cout << "Bubble Sort:" << endl;
-			printVector(bubbleArr);
-
-			cout << endl << endl;
-			cout << "Insertion Sort:" << endl;
-			printVector(insertionArr);
-
-			cout << endl << endl;
-			cout << "Hybrid (Merge & Bubble, Threshold = "
-				<< threshold << "):" << endl;
-			printVector(mergeBubbleArr);
-
-			cout << endl << endl;
-			cout << "Hybrid (Merge & Insertion, Threshold = "
-				<< threshold << "):" << endl;
-			printVector(mergeInsertionArr);
-
-			cout << endl << endl;
-			cout << "Hybrid (Quick & Bubble, Threshold = "
-				<< threshold << "):" << endl;
-			printVector(quickBubbleArr);
-
-			cout << endl << endl;
-			cout << "Hybrid (Quick & Insertion, Threshold = "
-				<< threshold << "):" << endl;
-			printVector(quickInsertionArr);
-		}
-
-		cout << endl << endl << "Again? (y/n): ";
-		cin >> tmp;
-		again = (tmp == "y") ? true : false;
-
 	}
 
 	return 0;
