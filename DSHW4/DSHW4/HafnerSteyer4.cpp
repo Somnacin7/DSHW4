@@ -103,7 +103,7 @@ void bubbleSort(vector<int> &v) {
 // To be used with quickSort
 int partition(vector<int> &v, int start, int end) {
 	int pivotValue = v[end];
-	int partitionIndex = start - 1;
+	int partitionIndex = start;
 	int temp;
 
 	for (int n = start; n < end; n++) {
@@ -115,7 +115,7 @@ int partition(vector<int> &v, int start, int end) {
 		}
 	}
 
-	partitionIndex++;
+	//partitionIndex++;
 	temp = v[partitionIndex];
 	v[partitionIndex] = v[end];
 	v[end] = temp;
@@ -170,7 +170,7 @@ int main() {
 	int threshold;
 	int listSize;
 	bool manualEntry;
-	bool display;
+	bool display = true;
 	string tmp;
 	int tmpInt;
 	
@@ -203,7 +203,7 @@ int main() {
 			manualEntry = (tmp == "manual") ? true : false;
 
 			if (!manualEntry) {
-				cout << "Should the generated list be displayed? (y/n): ";
+				cout << "Should the generated lists be displayed? (y/n): ";
 				cin >> tmp;
 				display = (tmp == "y") ? true : false;
 			}
@@ -239,65 +239,48 @@ int main() {
 		insertionSort(insertionArr);
 		hybridSort(mergeBubbleArr, MERGE, BUBBLE, threshold);
 		hybridSort(mergeInsertionArr, MERGE, INSERTION, threshold);
-		cout << "quickbubble" << endl;
 		hybridSort(quickBubbleArr, QUICK, BUBBLE, threshold);
-		cout << "quickinsert" << endl;
 		hybridSort(quickInsertionArr, QUICK, INSERTION, threshold);
-
 
 		if (display) {
 			cout << endl << endl;
 			cout << "Unsorted:" << endl;
-			cout << "\t";
 			printVector(arr);
 
 			cout << endl << endl;
 			cout << "Bubble Sort:" << endl;
-			cout << "\t";
 			printVector(bubbleArr);
 
 			cout << endl << endl;
 			cout << "Insertion Sort:" << endl;
-			cout << "\t";
 			printVector(insertionArr);
 
 			cout << endl << endl;
 			cout << "Hybrid (Merge & Bubble, Threshold = "
 				<< threshold << "):" << endl;
-			cout << "\t";
 			printVector(mergeBubbleArr);
 
 			cout << endl << endl;
 			cout << "Hybrid (Merge & Insertion, Threshold = "
 				<< threshold << "):" << endl;
-			cout << "\t";
 			printVector(mergeInsertionArr);
 
 			cout << endl << endl;
 			cout << "Hybrid (Quick & Bubble, Threshold = "
 				<< threshold << "):" << endl;
-			cout << "\t";
 			printVector(quickBubbleArr);
 
 			cout << endl << endl;
 			cout << "Hybrid (Quick & Insertion, Threshold = "
 				<< threshold << "):" << endl;
-			cout << "\t";
 			printVector(quickInsertionArr);
-
-
-
 		}
 
 		cout << endl << endl << "Again? (y/n): ";
 		cin >> tmp;
 		again = (tmp == "y") ? true : false;
 
-
 	}
 
-
-
-	system("pause");
 	return 0;
 }
