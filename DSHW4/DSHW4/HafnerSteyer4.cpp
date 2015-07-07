@@ -290,10 +290,8 @@ int main() {
 			// Perform each sort
 			bubbleSort(bubbleArr);
 			insertionSort(insertionArr);
-			hybridSort(mergeBubbleArr, MERGE, BUBBLE, threshold);
-			hybridSort(mergeInsertionArr, MERGE, INSERTION, threshold);
-			hybridSort(quickBubbleArr, QUICK, BUBBLE, threshold);
-			hybridSort(quickInsertionArr, QUICK, INSERTION, threshold);
+
+			cout << endl;
 
 			if (display) {
 				cout << endl << endl;
@@ -302,32 +300,104 @@ int main() {
 
 				cout << endl << endl;
 				cout << "Bubble Sort:" << endl;
-				cout << "Comparisons: " << bubbleCounter << endl;
+			}
+			if (displayComparisons) {
+				cout << "Bubble Sort Comparisons: " << bubbleCounter << endl;
+			}
+			if (display) {
 				printVector(bubbleArr);
 
 				cout << endl << endl;
 				cout << "Insertion Sort:" << endl;
-				cout << "Comparisons: " << insertionCounter << endl;
+			}
+			if (displayComparisons) {
+				cout << "Insertion Sort Comparisons: " << insertionCounter << endl;
+			}
+			if (display) {
 				printVector(insertionArr);
+			}
 
+			bubbleCounter = 0;
+			insertionCounter = 0;
+			hybridSort(mergeBubbleArr, MERGE, BUBBLE, threshold);
+
+			if (display) {
 				cout << endl << endl;
 				cout << "Hybrid (Merge & Bubble, Threshold = "
 					<< threshold << "):" << endl;
-				printVector(mergeBubbleArr);
+			}
 
+			if (displayComparisons && mergeBubbleArr.size() <= (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (bubble): " << bubbleCounter << endl;
+			}
+			else if (displayComparisons && mergeBubbleArr.size() > (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (merge): " << mergeCounter << endl;
+			}
+
+			if (display) {
+				printVector(mergeBubbleArr);
+			}
+
+			mergeCounter = 0;
+			bubbleCounter = 0;
+			hybridSort(mergeInsertionArr, MERGE, INSERTION, threshold);
+			
+			if (display) {
 				cout << endl << endl;
 				cout << "Hybrid (Merge & Insertion, Threshold = "
 					<< threshold << "):" << endl;
-				printVector(mergeInsertionArr);
+			}
 
+			if (displayComparisons && mergeInsertionArr.size() <= (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (insertion): " << insertionCounter << endl;
+			}
+			else if (displayComparisons && mergeInsertionArr.size() > (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (merge): " << mergeCounter << endl;
+			}
+
+			if (display) {
+				printVector(mergeInsertionArr);
+			}
+
+			mergeCounter = 0;
+			insertionCounter = 0;
+			hybridSort(quickBubbleArr, QUICK, BUBBLE, threshold);
+			
+			if (display) {
 				cout << endl << endl;
 				cout << "Hybrid (Quick & Bubble, Threshold = "
 					<< threshold << "):" << endl;
-				printVector(quickBubbleArr);
+			}
 
+			if (displayComparisons && quickBubbleArr.size() <= (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (bubble): " << bubbleCounter << endl;
+			}
+			else if (displayComparisons && quickBubbleArr.size() > (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (quick): " << quickCounter << endl;
+			}
+
+			if (display) {
+				printVector(quickBubbleArr);
+			}
+
+			quickCounter = 0;
+			bubbleCounter = 0;
+			hybridSort(quickInsertionArr, QUICK, INSERTION, threshold);
+
+			if (display) {
 				cout << endl << endl;
 				cout << "Hybrid (Quick & Insertion, Threshold = "
 					<< threshold << "):" << endl;
+			}
+
+			if (displayComparisons && quickInsertionArr.size() <= (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (insertion): " << insertionCounter << endl;
+			}
+			else if (displayComparisons && quickInsertionArr.size() > (unsigned)threshold) {
+				cout << "Hybrid Sort Comparisons (quick): " << quickCounter << endl;
+			}
+
+			if (display) {
 				printVector(quickInsertionArr);
 			}
 
