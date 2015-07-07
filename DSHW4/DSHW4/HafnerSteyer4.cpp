@@ -18,6 +18,10 @@ using namespace std;
 
 enum large_sort_type { MERGE, QUICK };
 enum small_sort_type { BUBBLE, INSERTION };
+unsigned int bubbleCounter;
+unsigned int insertionCounter;
+unsigned int mergeCounter;
+unsigned int quickCounter;
 
 // this function merges two vectors, to be used with MergeSort
 vector<int> merge(vector<int> &l, vector<int> &r) {
@@ -33,10 +37,12 @@ vector<int> merge(vector<int> &l, vector<int> &r) {
 			l1++;
 		}
 		else if (l[l1] < r[r1]) { // if next value of left is less
+			mergeCounter++;
 			result.push_back(l[l1]);
 			l1++;
 		}
 		else { // if next value of right is less (or equal)
+			mergeCounter++;
 			result.push_back(r[r1]);
 			r1++;
 		}
@@ -72,6 +78,7 @@ void insertionSort(vector<int> &v) {
 	for (unsigned int i = 0; i < v.size(); i++) {
 		n = i;
 		while (n > 0 && v[n] < v[n - 1]) {
+			insertionCounter++;
 			temp = v[n];
 			v[n] = v[n - 1];
 			v[n - 1] = temp;
@@ -92,6 +99,7 @@ void bubbleSort(vector<int> &v) {
 				v[j] = v[j + 1];
 				v[j + 1] = temp;
 			}
+			bubbleCounter++;
 		}
 	}
 	return;
@@ -113,6 +121,7 @@ int partition(vector<int> &v, int start, int end) {
 			v[n] = temp;
 			partitionIndex++;
 		}
+		quickCounter++;
 	}
 
 	//partitionIndex++;
@@ -152,7 +161,7 @@ void hybridSort(	vector<int> &v, large_sort_type Large, small_sort_type Small,
 
 
 void printVector(vector<int> &v) {
-	for (int i = 0; i < v.size(); i++) {
+	for (unsigned int i = 0; i < v.size(); i++) {
 		cout << v[i] << "\t";
 	}
 	cout << endl;
@@ -161,7 +170,6 @@ void printVector(vector<int> &v) {
 // main function
 int main() {
 	srand(time(NULL));
-
 
 	cout << "This program allows the user to create a list, and then hybrid" << endl;
 	cout << "sort it depending on an entered threshold" << endl;
@@ -274,6 +282,11 @@ int main() {
 			vector<int> quickBubbleArr = vector<int>(arr);
 			vector<int> quickInsertionArr = vector<int>(arr);
 
+			bubbleCounter = 0;
+			insertionCounter = 0;
+			mergeCounter = 0;
+			quickCounter = 0;
+
 			// Perform each sort
 			bubbleSort(bubbleArr);
 			insertionSort(insertionArr);
@@ -289,10 +302,12 @@ int main() {
 
 				cout << endl << endl;
 				cout << "Bubble Sort:" << endl;
+				cout << "Comparisons: " << bubbleCounter << endl;
 				printVector(bubbleArr);
 
 				cout << endl << endl;
 				cout << "Insertion Sort:" << endl;
+				cout << "Comparisons: " << insertionCounter << endl;
 				printVector(insertionArr);
 
 				cout << endl << endl;
