@@ -406,6 +406,77 @@ int main() {
 			again = (tmp == "y") ? true : false;
 
 		}
+
+		// this is for making the table
+		for (int t = 8; t <= 16; t++) {
+			for (int n = 4; n <= 20; n += 2) {
+				bubbleCounter = 0;
+				insertionCounter = 0;
+				mergeCounter = 0;
+				quickCounter = 0;
+
+				vector<int> hv1;
+				for (int i = 0; i < n; i++) {
+					hv1.push_back(rand() % 100000);
+				}
+				vector<int> hv2 = hv1;
+				vector<int> hv3 = hv1;
+				vector<int> hv4 = hv1;
+
+				cout << "T: " << t << "\tN: " << n;
+
+				hybridSort(hv1, MERGE, BUBBLE, t);
+				if (n > t) {
+					cout << "\tM: " << mergeCounter;
+				}
+				else {
+					cout << "\tB: " << bubbleCounter;
+				}
+
+				bubbleCounter = 0;
+				mergeCounter = 0;
+
+				hybridSort(hv2, MERGE, INSERTION, t);
+				if (n > t) {
+					cout << "\tM: " << mergeCounter;
+				}
+				else {
+					cout << "\tI: " << insertionCounter;
+				}
+
+				mergeCounter = 0;
+				insertionCounter = 0;
+
+				hybridSort(hv3, QUICK, BUBBLE, t);
+				if (n > t) {
+					cout << "\tQ: " << quickCounter;
+				}
+				else {
+					cout << "\tB: " << bubbleCounter;
+				}
+
+				bubbleCounter = 0;
+				quickCounter = 0;
+
+				hybridSort(hv4, QUICK, INSERTION, t);
+				if (n > t) {
+					cout << "\tQ: " << quickCounter;
+				}
+				else {
+					cout << "\tI: " << insertionCounter;
+				}
+
+				insertionCounter = 0;
+				quickCounter = 0;
+
+				cout << endl;
+			}
+
+			cout << endl;
+			system("Pause");
+			cout << endl;
+		}
+
 	}
 
 	return 0;
