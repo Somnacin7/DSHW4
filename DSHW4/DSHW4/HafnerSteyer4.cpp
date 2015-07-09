@@ -224,23 +224,6 @@ void hybridSort(vector<int> &v, large_sort_type large, small_sort_type small,
 }
 
 
-/*void hybridSort(	vector<int> &v, large_sort_type Large, small_sort_type Small, 
-					unsigned int T) {
-	if (v.size() > T) {
-		if (Large == MERGE) {
-			mergeSort(v);
-			return;
-		}
-		quickSort(v, 0, v.size() - 1);
-		return;
-	}
-	if (Small == BUBBLE) {
-		bubbleSort(v);
-		return;
-	}
-	insertionSort(v);
-	return;
-}*/
 
 
 void printVector(vector<int> &v) {
