@@ -489,14 +489,14 @@ int main() {
 			quickCounter = 0;
 
 			vector<int> hv1;
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < 20; i++) {
 				hv1.push_back(rand() % 100000);
 			}
 			vector<int> hv2 = hv1;
 			vector<int> hv3 = hv1;
 			vector<int> hv4 = hv1;
 
-			hybridSort(hv1, MERGE, BUBBLE, t);
+			hybridSort(hv1, MERGE, BUBBLE, t, 0, hv1.size() - 1);
 			/*if (n > t) {
 					cout << "\tM: " << mergeCounter;
 					}
@@ -509,7 +509,7 @@ int main() {
 			bubbleCounter = 0;
 			mergeCounter = 0;
 
-			hybridSort(hv2, MERGE, INSERTION, t);
+			hybridSort(hv2, MERGE, INSERTION, t, 0, hv2.size() - 1);
 			/*if (n > t) {
 					cout << "\tM: " << mergeCounter;
 					}
@@ -522,7 +522,7 @@ int main() {
 			mergeCounter = 0;
 			insertionCounter = 0;
 
-			hybridSort(hv3, QUICK, BUBBLE, t);
+			hybridSort(hv3, QUICK, BUBBLE, t, 0, hv3.size() - 1);
 			/*if (n > t) {
 					cout << "\tQ: " << quickCounter;
 					}
@@ -535,7 +535,7 @@ int main() {
 			bubbleCounter = 0;
 			quickCounter = 0;
 
-			hybridSort(hv4, QUICK, INSERTION, t);
+			hybridSort(hv4, QUICK, INSERTION, t, 0, hv4.size() - 1);
 			/*if (n > t) {
 					cout << "\tQ: " << quickCounter;
 					}
