@@ -481,7 +481,6 @@ int main() {
 			insertionCounter = 0;
 			quickCounter = 0;
 
-			cout << endl;
 		}
 	}
 
