@@ -141,8 +141,7 @@ void quickSort(vector<int> &v, int start, int end) {
 	}
 }
 
-void hybridSort(	vector<int> &v, large_sort_type Large, small_sort_type Small, 
-					unsigned int T) {
+void hybridSort(vector<int> &v, large_sort_type Large, small_sort_type Small, unsigned int T) {
 	if (v.size() > T) {
 		if (Large == MERGE) {
 			mergeSort(v);
