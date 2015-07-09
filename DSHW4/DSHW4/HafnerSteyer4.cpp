@@ -307,7 +307,7 @@ int main() {
 			display = false;
 		}
 
-		if (listSize < 100) {
+		if (listSize < 100 || !manualEntry) {
 			cout << "Should the generated lists be displayed? (y/n) ";
 			while (cin >> tmp) {
 				if (tmp == "y") {
