@@ -183,7 +183,7 @@ int main() {
 	bool displayComparisons = false;
 	
 
-	while (again) {
+	/*while (again) {
 
 		// Get threshold from user
 		cout << "Threshold: ";
@@ -404,79 +404,128 @@ int main() {
 			cin >> tmp;
 			again = (tmp == "y") ? true : false;
 
-		}
+		}*/
 
-		// this is for making the table
-		for (int t = 8; t <= 16; t++) {
-			for (int n = 4; n <= 20; n += 2) {
-				bubbleCounter = 0;
-				insertionCounter = 0;
-				mergeCounter = 0;
-				quickCounter = 0;
 
-				vector<int> hv1;
-				for (int i = 0; i < n; i++) {
-					hv1.push_back(rand() % 100000);
-				}
-				vector<int> hv2 = hv1;
-				vector<int> hv3 = hv1;
-				vector<int> hv4 = hv1;
+	// this is for making the table
 
-				cout << "T: " << t << "\tN: " << n;
+	int BMresults[10][9];
+	int BQresults[10][9];
+	int IMresults[10][9];
+	int IQresults[10][9];
 
-				hybridSort(hv1, MERGE, BUBBLE, t);
-				if (n > t) {
-					cout << "\tM: " << mergeCounter;
-				}
-				else {
-					cout << "\tB: " << bubbleCounter;
-				}
+	for (int t = 8; t <= 16; t++) {
+		for (int n = 0; n < 10; n++) {
+			bubbleCounter = 0;
+			insertionCounter = 0;
+			mergeCounter = 0;
+			quickCounter = 0;
 
-				bubbleCounter = 0;
-				mergeCounter = 0;
-
-				hybridSort(hv2, MERGE, INSERTION, t);
-				if (n > t) {
-					cout << "\tM: " << mergeCounter;
-				}
-				else {
-					cout << "\tI: " << insertionCounter;
-				}
-
-				mergeCounter = 0;
-				insertionCounter = 0;
-
-				hybridSort(hv3, QUICK, BUBBLE, t);
-				if (n > t) {
-					cout << "\tQ: " << quickCounter;
-				}
-				else {
-					cout << "\tB: " << bubbleCounter;
-				}
-
-				bubbleCounter = 0;
-				quickCounter = 0;
-
-				hybridSort(hv4, QUICK, INSERTION, t);
-				if (n > t) {
-					cout << "\tQ: " << quickCounter;
-				}
-				else {
-					cout << "\tI: " << insertionCounter;
-				}
-
-				insertionCounter = 0;
-				quickCounter = 0;
-
-				cout << endl;
+			vector<int> hv1;
+			for (int i = 0; i < 16; i++) {
+				hv1.push_back(rand() % 100000);
 			}
+			vector<int> hv2 = hv1;
+			vector<int> hv3 = hv1;
+			vector<int> hv4 = hv1;
 
-			cout << endl;
-			system("Pause");
+			hybridSort(hv1, MERGE, BUBBLE, t);
+			/*if (n > t) {
+				cout << "\tM: " << mergeCounter;
+				}
+				else {
+				cout << "\tB: " << bubbleCounter;
+				}*/
+
+			BMresults[n][t - 8] = mergeCounter + bubbleCounter;
+
+			bubbleCounter = 0;
+			mergeCounter = 0;
+
+			hybridSort(hv2, MERGE, INSERTION, t);
+			/*if (n > t) {
+				cout << "\tM: " << mergeCounter;
+				}
+				else {
+				cout << "\tI: " << insertionCounter;
+				}*/
+
+			IMresults[n][t - 8] = mergeCounter + insertionCounter;
+
+			mergeCounter = 0;
+			insertionCounter = 0;
+
+			hybridSort(hv3, QUICK, BUBBLE, t);
+			/*if (n > t) {
+				cout << "\tQ: " << quickCounter;
+				}
+				else {
+				cout << "\tB: " << bubbleCounter;
+				}*/
+
+			BQresults[n][t - 8] = quickCounter + bubbleCounter;
+
+			bubbleCounter = 0;
+			quickCounter = 0;
+
+			hybridSort(hv4, QUICK, INSERTION, t);
+			/*if (n > t) {
+				cout << "\tQ: " << quickCounter;
+				}
+				else {
+				cout << "\tI: " << insertionCounter;
+				}*/
+
+			IQresults[n][t - 8] = quickCounter + insertionCounter;
+
+			insertionCounter = 0;
+			quickCounter = 0;
+
 			cout << endl;
 		}
-
 	}
+
+	cout << endl << "BubbleMerge" << endl;
+
+	for (int n = 0; n < 10; n++) {
+		for (int k = 0; k < 9; k++) {
+			cout << BMresults[n][k] << "\t";
+		}
+		cout << endl;
+	}
+
+	cout << endl << "BubbleQuick" << endl;
+
+	for (int n = 0; n < 10; n++) {
+		for (int k = 0; k < 9; k++) {
+			cout << BQresults[n][k] << "\t";
+		}
+		cout << endl;
+	}
+
+	cout << endl << "InsertionMerge" << endl;
+
+	for (int n = 0; n < 10; n++) {
+		for (int k = 0; k < 9; k++) {
+			cout << IMresults[n][k] << "\t";
+		}
+		cout << endl;
+	}
+
+	cout << endl << "InsertionQuick" << endl;
+
+	for (int n = 0; n < 10; n++) {
+		for (int k = 0; k < 9; k++) {
+			cout << IQresults[n][k] << "\t";
+		}
+		cout << endl;
+	}
+
+	cout << endl;
+	system("Pause");
+	cout << endl;
+	
+
 
 	return 0;
 }
